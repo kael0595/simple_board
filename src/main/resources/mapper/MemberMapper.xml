@@ -35,4 +35,11 @@
             email     = #{email},
             update_dt = now()
     </update>
+
+    <update id="memberDelete" parameterType="com.practice.simple_board.member.vo.MemberVO">
+        update member
+        set deleted   = true,
+            update_dt = now()
+    </update>
+
 </mapper>

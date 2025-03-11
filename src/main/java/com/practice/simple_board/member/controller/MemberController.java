@@ -98,4 +98,14 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
+    @GetMapping("/me/{memberId}/delete")
+    public String memberDelete(@PathVariable("memberId") String memberId) {
+
+        MemberVO member = memberService.selectMemberByMemberId(memberId);
+
+        memberService.memberDelete(member);
+
+        return "redirect:/member/login";
+    }
+
 }

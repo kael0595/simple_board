@@ -31,4 +31,8 @@ public class MemberService {
     public void memberUpdate(MemberVO memberVO) {
         memberMapper.memberUpdate(memberVO);
     }
+
+    public void memberDelete(MemberVO member) {
+        memberMapper.memberDelete(member);
+    }
 }

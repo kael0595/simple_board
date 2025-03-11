@@ -47,8 +47,11 @@
                 </tr>
             </table>
             <button>정보 수정</button>
-            <button>회원 탈퇴</button>
+
         </form>
+        <a th:href="@{|/member/me/${memberId}/delete|}">
+            <button>회원 탈퇴</button>
+        </a>
     </center>
 </div>
 </body>
