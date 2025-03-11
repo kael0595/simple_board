@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.practice.simple_board">
+<mapper namespace="com.practice.simple_board.member.mapper.MemberMapper">
 
+    <insert id="createMember" parameterType="com.practice.simple_board.member.vo.MemberVO">
+        insert into member (member_id, password, name, phone, email, deleted, create_dt)
+        values (#{memberId}, #{password}, #{name}, #{phone}, #{email}, false, now())
+    </insert>
 </mapper>
