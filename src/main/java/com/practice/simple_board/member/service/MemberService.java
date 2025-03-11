@@ -16,7 +16,7 @@ public class MemberService {
         memberMapper.createMember(memberVO);
     }
 
-    public int login(MemberVO memberVO) {
+    public MemberVO login(MemberVO memberVO) {
         return memberMapper.login(memberVO);
     }
 

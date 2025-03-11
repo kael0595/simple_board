@@ -8,7 +8,8 @@
         values (#{memberId}, #{password}, #{name}, #{phone}, #{email}, false, now())
     </insert>
 
-    <select id="login" parameterType="com.practice.simple_board.member.vo.MemberVO" resultType="int">
+    <select id="login" parameterType="com.practice.simple_board.member.vo.MemberVO"
+            resultType="com.practice.simple_board.member.vo.MemberVO">
         select *
         from member
         where member_id = #{memberId}

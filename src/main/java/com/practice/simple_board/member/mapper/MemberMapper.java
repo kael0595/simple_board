@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MemberMapper {
     void createMember(MemberVO memberVO);
 
-    int login(MemberVO memberVO);
+    MemberVO login(MemberVO memberVO);
 
     MemberVO selectMemberById(int id);
 

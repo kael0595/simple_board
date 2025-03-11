@@ -19,13 +19,11 @@ public class MainController {
                         HttpSession session) {
 
         if (session.getAttribute("member") != null) {
-            int id = (Integer) session.getAttribute("member");
-            MemberVO member = memberService.selectMemberById(id);
+
+            MemberVO member = (MemberVO) session.getAttribute("member");
+
             model.addAttribute("member", member);
         }
-
-
-
 
 
         return "index";

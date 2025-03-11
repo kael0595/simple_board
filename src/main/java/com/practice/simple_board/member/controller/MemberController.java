@@ -54,15 +54,9 @@ public class MemberController {
             return "member/login";
         }
 
-        int login = memberService.login(memberVO);
+        MemberVO login = memberService.login(memberVO);
 
-        MemberVO member = memberService.selectMemberById(login);
-
-        if (member.isDeleted()) {
-            return "redirect:/member/login";
-        }
-
-        if (login < 1) {
+        if (login == null) {
             return "member/login";
         }
 
