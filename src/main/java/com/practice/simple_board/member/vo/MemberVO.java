@@ -2,6 +2,8 @@ package com.practice.simple_board.member.vo;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class MemberVO {
 
@@ -18,4 +20,10 @@ public class MemberVO {
     private String phone;
 
     private String email;
+
+    private boolean deleted;
+
+    private LocalDateTime createDt;
+
+    private  LocalDateTime updateDt;
 }
