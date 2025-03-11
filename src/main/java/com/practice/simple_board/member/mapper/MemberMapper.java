@@ -10,4 +10,8 @@ public interface MemberMapper {
     int login(MemberVO memberVO);
 
     MemberVO selectMemberById(int id);
+
+    MemberVO selectMemberByMemberId(String memberId);
+
+    void memberUpdate(MemberVO memberVO);
 }

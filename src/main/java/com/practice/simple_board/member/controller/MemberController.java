@@ -6,11 +6,9 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -72,6 +70,32 @@ public class MemberController {
         session.removeAttribute("member");
         session.invalidate();
         return "redirect:/";
+    }
+
+    @GetMapping("/me/{memberId}")
+    public String me(@PathVariable("memberId") String memberId,
+                     Model model) {
+
+        MemberVO member = memberService.selectMemberByMemberId(memberId);
+        model.addAttribute("member", member);
+        return "member/me";
+
+    }
+
+    @PostMapping("/me/{memberId}/update")
+    public String memberUpdate(@Valid @ModelAttribute MemberVO memberVO,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "member/me";
+        }
+
+        if (!memberVO.getPassword().equals(memberVO.getPasswordCnf())) {
+            return "member/me";
+        }
+
+        memberService.memberUpdate(memberVO);
+
+        return "redirect:/member/login";
     }
 
 }

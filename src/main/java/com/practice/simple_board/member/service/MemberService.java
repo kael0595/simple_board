@@ -23,4 +23,12 @@ public class MemberService {
     public MemberVO selectMemberById(int id) {
         return memberMapper.selectMemberById(id);
     }
+
+    public MemberVO selectMemberByMemberId(String memberId) {
+        return memberMapper.selectMemberByMemberId(memberId);
+    }
+
+    public void memberUpdate(MemberVO memberVO) {
+        memberMapper.memberUpdate(memberVO);
+    }
 }
