@@ -2,6 +2,7 @@ package com.practice.simple_board.member.controller;
 
 import com.practice.simple_board.member.service.MemberService;
 import com.practice.simple_board.member.vo.MemberVO;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -39,5 +40,30 @@ public class MemberController {
 
         return "redirect:/member/login";
 
+    }
+
+    @GetMapping("/login")
+    public String loginForm() {
+        return "member/login";
+    }
+
+    @PostMapping("/login")
+    public String login(@Valid @ModelAttribute MemberVO memberVO,
+                        BindingResult bindingResult,
+                        HttpSession session) {
+
+        if (bindingResult.hasErrors()) {
+            return "member/login";
+        }
+
+        int login = memberService.login(memberVO);
+
+        if (login < 1) {
+            return "member/login";
+        }
+
+        session.setAttribute("member", login);
+
+        return "redirect:/";
     }
 }
