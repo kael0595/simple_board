@@ -19,4 +19,8 @@ public class MemberService {
     public int login(MemberVO memberVO) {
         return memberMapper.login(memberVO);
     }
+
+    public MemberVO selectMemberById(int id) {
+        return memberMapper.selectMemberById(id);
+    }
 }

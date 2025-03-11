@@ -8,4 +8,6 @@ public interface MemberMapper {
     void createMember(MemberVO memberVO);
 
     int login(MemberVO memberVO);
+
+    MemberVO selectMemberById(int id);
 }
