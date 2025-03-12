@@ -22,4 +22,12 @@ public class BoardService {
         return boardMapper.selectAll();
     }
 
+    public BoardVO selectOneById(Long id) {
+        return boardMapper.selectOneById(id);
+    }
+
+    public void increaseViewCount(BoardVO board) {
+        board.setViewCount(board.getViewCount() + 1);
+        boardMapper.increaseViewCount(board);
+    }
 }

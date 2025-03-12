@@ -12,4 +12,7 @@ public interface BoardMapper {
 
     List<BoardVO> selectAll();
 
+    BoardVO selectOneById(Long id);
+
+    void increaseViewCount(BoardVO board);
 }

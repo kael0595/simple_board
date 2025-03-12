@@ -4,13 +4,25 @@
 <mapper namespace="com.practice.simple_board.board.mapper.BoardMapper">
 
     <insert id="create" parameterType="com.practice.simple_board.board.vo.BoardVO">
-        insert into board (title, content, author, create_dt)
-        values (#{title}, #{content}, #{author}, now())
+        insert into board (title, content, author, view_count, create_dt)
+        values (#{title}, #{content}, #{author}, 0, now())
     </insert>
 
     <select id="selectAll" resultType="com.practice.simple_board.board.vo.BoardVO">
         select *
         from board
     </select>
+
+    <select id="selectOneById" parameterType="long" resultType="com.practice.simple_board.board.vo.BoardVO">
+        select *
+        from board
+        where id = #{id}
+    </select>
+
+    <update id="increaseViewCount" parameterType="com.practice.simple_board.board.vo.BoardVO">
+        update board
+        set view_count = #{viewCount},
+            update_dt = now()
+    </update>
 
 </mapper>

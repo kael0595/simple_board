@@ -53,4 +53,18 @@ public class BoardController {
 
     }
 
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable("id") Long id,
+                         Model model) {
+
+        BoardVO board = boardService.selectOneById(id);
+
+        boardService.increaseViewCount(board);
+
+        model.addAttribute("board", board);
+
+        return "board/detail";
+
+    }
+
 }
