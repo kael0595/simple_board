@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<center>
+  <h1>게시글 목록</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>게시글 번호</th>
+      <th>제목</th>
+      <th>작성자</th>
+      <th>조회수</th>
+      <th>작성일자</th>
+      <th>수정일자</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="board : ${boardList}">
+      <td th:text="${board.id}"></td>
+      <td>
+        <a th:text="${board.title}" th:href="@{|/board/detail/${board.id}}"></a>
+      </td>
+      <td th:text="${board.author}"></td>
+      <td></td>
+      <td th:text="${board.createDt}"></td>
+      <td th:text="${board.updateDt}"></td>
+    </tr>
+    </tbody>
+  </table>
+</center>
+</body>
+</html>
