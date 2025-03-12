@@ -14,7 +14,7 @@ public class BoardVO {
 
     private String content;
 
-    private MemberVO author;
+    private String author;
 
     private LocalDateTime createDt;
 
