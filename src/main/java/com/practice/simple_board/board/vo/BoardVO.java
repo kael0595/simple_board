@@ -16,6 +16,8 @@ public class BoardVO {
 
     private String author;
 
+    private int viewCount;
+
     private LocalDateTime createDt;
 
     private LocalDateTime updateDt;
