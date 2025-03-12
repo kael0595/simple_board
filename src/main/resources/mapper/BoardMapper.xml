@@ -3,5 +3,9 @@
 
 <mapper namespace="com.practice.simple_board.board.mapper.BoardMapper">
 
+    <insert id="create" parameterType="com.practice.simple_board.board.vo.BoardVO">
+        insert into board (title, content, author, create_dt)
+        values (#{title}, #{content}, #{author}, now())
+    </insert>
 
 </mapper>
