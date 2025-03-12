@@ -67,4 +67,46 @@ public class BoardController {
 
     }
 
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable("id") Long id,
+                             Model model,
+                             HttpSession session) {
+
+        MemberVO member = (MemberVO) session.getAttribute("member");
+
+        BoardVO board = boardService.selectOneById(id);
+
+        if (!member.getMemberId().equals(board.getAuthor())) {
+            return "redirect:/board/detail/" + id;
+        }
+
+        model.addAttribute("board", board);
+
+        return "board/update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable("id") Long id,
+                         @Valid @ModelAttribute BoardVO boardVO,
+                         BindingResult bindingResult,
+                         HttpSession session) {
+
+        MemberVO member = (MemberVO) session.getAttribute("member");
+
+        BoardVO board = boardService.selectOneById(id);
+
+        if (!member.getMemberId().equals(board.getAuthor())) {
+            return "redirect:/board/detail/" + id;
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "board/update";
+        }
+
+        boardService.updateBoard(board, boardVO);
+
+        return "redirect:/board/detail/" + id;
+
+    }
+
 }

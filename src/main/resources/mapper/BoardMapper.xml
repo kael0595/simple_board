@@ -25,4 +25,11 @@
             update_dt = now()
     </update>
 
+    <update id="updateBoard" parameterType="com.practice.simple_board.board.vo.BoardVO">
+        update board
+        set title = #{title},
+            content = #{content},
+            update_dt = now()
+    </update>
+
 </mapper>

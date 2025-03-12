@@ -2,6 +2,8 @@ package com.practice.simple_board.board.service;
 
 import com.practice.simple_board.board.mapper.BoardMapper;
 import com.practice.simple_board.board.vo.BoardVO;
+import com.practice.simple_board.member.vo.MemberVO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +31,12 @@ public class BoardService {
     public void increaseViewCount(BoardVO board) {
         board.setViewCount(board.getViewCount() + 1);
         boardMapper.increaseViewCount(board);
+    }
+
+    public void updateBoard(BoardVO board, BoardVO boardVO) {
+
+        board.setTitle(boardVO.getTitle());
+        board.setContent(boardVO.getContent());
+        boardMapper.updateBoard(board);
     }
 }

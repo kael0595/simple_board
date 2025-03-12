@@ -15,4 +15,6 @@ public interface BoardMapper {
     BoardVO selectOneById(Long id);
 
     void increaseViewCount(BoardVO board);
+
+    void updateBoard(BoardVO board);
 }
