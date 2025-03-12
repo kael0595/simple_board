@@ -25,7 +25,7 @@
         <a th:text="${board.title}" th:href="@{|/board/detail/${board.id}}"></a>
       </td>
       <td th:text="${board.author}"></td>
-      <td></td>
+      <td th:text="${board.viewCount}"></td>
       <td th:text="${board.createDt}"></td>
       <td th:text="${board.updateDt}"></td>
     </tr>
