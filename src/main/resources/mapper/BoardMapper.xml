@@ -30,6 +30,14 @@
         set title = #{title},
             content = #{content},
             update_dt = now()
+        where id = #{id}
     </update>
+
+    <delete id="board" parameterType="Long">
+        delete
+        from board
+        where id =
+              #{id}
+    </delete>
 
 </mapper>
