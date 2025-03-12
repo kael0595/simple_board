@@ -8,4 +8,9 @@
         values (#{title}, #{content}, #{author}, now())
     </insert>
 
+    <select id="selectAll" resultType="com.practice.simple_board.board.vo.BoardVO">
+        select *
+        from board
+    </select>
+
 </mapper>
