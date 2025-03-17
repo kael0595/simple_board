@@ -5,6 +5,7 @@ import com.practice.simple_board.member.vo.MemberVO;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/join")
     public String joinForm() {
@@ -54,13 +57,13 @@ public class MemberController {
             return "member/login";
         }
 
-        MemberVO login = memberService.login(memberVO);
+        MemberVO member = memberService.selectMemberByMemberId(memberVO.getMemberId());
 
-        if (login == null) {
+        if (member == null || !passwordEncoder.matches(memberVO.getPassword(), member.getPassword())) {
             return "member/login";
         }
 
-        session.setAttribute("member", login);
+        session.setAttribute("member", member);
 
         return "redirect:/";
     }
