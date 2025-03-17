@@ -6,6 +6,7 @@ import com.practice.simple_board.member.vo.MemberVO;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
+@Slf4j
 public class BoardController {
 
     private final BoardService boardService;
@@ -34,8 +36,6 @@ public class BoardController {
         }
 
         MemberVO member = (MemberVO) session.getAttribute("member");
-
-        System.out.println(member);
 
         boardService.create(boardVO, member.getMemberId());
 
