@@ -21,23 +21,23 @@
 
     <update id="increaseViewCount" parameterType="com.practice.simple_board.board.vo.BoardVO">
         update board
-        set view_count = #{viewCount},
-            update_dt = now()
+        set view_count = #{viewCount}
+        where id = #{id}
     </update>
 
     <update id="updateBoard" parameterType="com.practice.simple_board.board.vo.BoardVO">
         update board
         set title = #{title},
-            content = #{content},
-            update_dt = now()
+        content = #{content},
+        update_dt = now()
         where id = #{id}
     </update>
 
-    <delete id="board" parameterType="Long">
-        delete
-        from board
-        where id =
-              #{id}
-    </delete>
+    <update id="deleteBoard" parameterType="com.practice.simple_board.board.vo.BoardVO">
+        update board
+        set deleted = true,
+        update_dt = now()
+        where id = #{id}
+    </update>
 
 </mapper>

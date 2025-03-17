@@ -1,6 +1,5 @@
 package com.practice.simple_board.board.vo;
 
-import com.practice.simple_board.member.vo.MemberVO;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,6 +16,8 @@ public class BoardVO {
     private String author;
 
     private int viewCount;
+
+    private boolean deleted;
 
     private LocalDateTime createDt;
 

@@ -109,4 +109,22 @@ public class BoardController {
 
     }
 
+    @GetMapping("/delete/{id}")
+    public String boardDelete(@PathVariable("id") Long id,
+                              HttpSession session) {
+
+        MemberVO memberVO = (MemberVO) session.getAttribute("member");
+
+        BoardVO boardVO = boardService.selectOneById(id);
+
+        if (!boardVO.getAuthor().equals(memberVO.getMemberId())) {
+            return "redirect:/board/detail/" + id;
+        }
+
+        boardService.deleteBoard(boardVO);
+
+        return "redirect:/board/list";
+
+    }
+
 }

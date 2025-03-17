@@ -17,4 +17,6 @@ public interface BoardMapper {
     void increaseViewCount(BoardVO board);
 
     void updateBoard(BoardVO board);
+
+    void deleteBoard(BoardVO boardVO);
 }
