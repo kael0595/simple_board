@@ -6,7 +6,8 @@
 </head>
 <body>
 <div th:if="${member != null}">
-    <h1><span th:text="${member.memberId}"></span>님 환영합니다.</h1>
+    <h1>
+        <a th:href="@{|/member/me/${member.memberId}|}"><span th:text="${member.memberId}"></span></a>님 환영합니다.</h1>
 </div>
 <div th:if="${member == null}">
     <h1>환영합니다.</h1>
