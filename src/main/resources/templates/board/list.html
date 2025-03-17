@@ -19,7 +19,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="board : ${boardList}">
+        <tr th:each="board : ${boardList}" th:if="${board.deleted != true}">
             <td th:text="${board.id}"></td>
             <td>
                 <a th:text="${board.title}" th:href="@{|/board/detail/${board.id}}"></a>
