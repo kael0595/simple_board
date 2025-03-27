@@ -2,7 +2,6 @@ package com.practice.simple_board.member.controller;
 
 import com.practice.simple_board.member.service.MemberService;
 import com.practice.simple_board.member.vo.MemberVO;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,30 +47,8 @@ public class MemberController {
         return "member/login";
     }
 
-    @PostMapping("/login")
-    public String login(@Valid @ModelAttribute MemberVO memberVO,
-                        BindingResult bindingResult,
-                        HttpSession session) {
-
-        if (bindingResult.hasErrors()) {
-            return "member/login";
-        }
-
-        MemberVO member = memberService.selectMemberByMemberId(memberVO.getMemberId());
-
-        if (member == null || !passwordEncoder.matches(memberVO.getPassword(), member.getPassword())) {
-            return "member/login";
-        }
-
-        session.setAttribute("member", member);
-
-        return "redirect:/";
-    }
-
     @PostMapping("/logout")
-    public String logout(HttpSession session) {
-        session.removeAttribute("member");
-        session.invalidate();
+    public String logout() {
         return "redirect:/";
     }
 
