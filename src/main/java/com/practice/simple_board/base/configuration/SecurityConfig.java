@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -30,7 +31,18 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/", "/member/join", "/member/login", "/board/list",
                                         "/board/detail/**", "/member/logout").permitAll()
-                                .anyRequest().authenticated()
+                                .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/member/login")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/member/login?error=true")
+                        .permitAll())
+                .logout((logout) -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                        .logoutSuccessUrl("/member/login")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID")
                 );
         return http.build();
     }
