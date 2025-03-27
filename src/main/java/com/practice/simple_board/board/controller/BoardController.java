@@ -4,7 +4,6 @@ import com.practice.simple_board.board.service.BoardService;
 import com.practice.simple_board.board.vo.BoardVO;
 import com.practice.simple_board.member.service.MemberService;
 import com.practice.simple_board.member.vo.MemberVO;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,12 +33,12 @@ public class BoardController {
     @PostMapping("/create")
     public String create(@Valid @ModelAttribute BoardVO boardVO,
                          BindingResult bindingResult,
-                         HttpSession session) {
+                         Principal principal) {
         if (bindingResult.hasErrors()) {
             return "board/create";
         }
 
-        MemberVO member = (MemberVO) session.getAttribute("member");
+        MemberVO member = memberService.selectMemberByMemberId(principal.getName());
 
         boardService.create(boardVO, member.getMemberId());
 
