@@ -52,8 +52,8 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @GetMapping("/me/{memberId}")
-    public String me(@PathVariable("memberId") String memberId,
+    @GetMapping("/mypage/{memberId}")
+    public String mypage(@PathVariable("memberId") String memberId,
                      Model model) {
 
         MemberVO member = memberService.selectMemberByMemberId(memberId);
