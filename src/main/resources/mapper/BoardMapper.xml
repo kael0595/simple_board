@@ -3,29 +3,29 @@
 
 <mapper namespace="com.practice.simple_board.board.mapper.BoardMapper">
 
-    <insert id="create" parameterType="com.practice.simple_board.board.vo.BoardVO">
+    <insert id="create" parameterType="BoardVO">
         insert into board (title, content, author, view_count, create_dt)
         values (#{title}, #{content}, #{author}, 0, now())
     </insert>
 
-    <select id="selectAll" resultType="com.practice.simple_board.board.vo.BoardVO">
+    <select id="selectAll" resultType="BoardVO">
         select *
         from board
     </select>
 
-    <select id="selectOneById" parameterType="long" resultType="com.practice.simple_board.board.vo.BoardVO">
+    <select id="selectOneById" parameterType="long" resultType="BoardVO">
         select *
         from board
         where id = #{id}
     </select>
 
-    <update id="increaseViewCount" parameterType="com.practice.simple_board.board.vo.BoardVO">
+    <update id="increaseViewCount" parameterType="BoardVO">
         update board
         set view_count = #{viewCount}
         where id = #{id}
     </update>
 
-    <update id="updateBoard" parameterType="com.practice.simple_board.board.vo.BoardVO">
+    <update id="updateBoard" parameterType="BoardVO">
         update board
         set title = #{title},
         content = #{content},
@@ -33,7 +33,7 @@
         where id = #{id}
     </update>
 
-    <update id="deleteBoard" parameterType="com.practice.simple_board.board.vo.BoardVO">
+    <update id="deleteBoard" parameterType="BoardVO">
         update board
         set deleted = true,
         update_dt = now()

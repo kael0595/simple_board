@@ -3,44 +3,42 @@
 
 <mapper namespace="com.practice.simple_board.member.mapper.MemberMapper">
 
-    <insert id="createMember" parameterType="com.practice.simple_board.member.vo.MemberVO">
+    <insert id="createMember" parameterType="MemberVO">
         insert into member (member_id, password, name, phone, email, deleted, create_dt)
         values (#{memberId}, #{password}, #{name}, #{phone}, #{email}, false, now())
     </insert>
 
-    <select id="login" parameterType="com.practice.simple_board.member.vo.MemberVO"
-            resultType="com.practice.simple_board.member.vo.MemberVO">
+    <select id="login" parameterType="MemberVO" resultType="MemberVO">
         select *
         from member
         where member_id = #{memberId}
-          and password = #{password}
+        and password = #{password}
     </select>
 
-    <select id="selectMemberById" parameterType="int" resultType="com.practice.simple_board.member.vo.MemberVO">
+    <select id="selectMemberById" parameterType="int" resultType="MemberVO">
         select *
         from member
         where id = #{id}
     </select>
 
-    <select id="selectMemberByMemberId" parameterType="com.practice.simple_board.member.vo.MemberVO"
-            resultType="com.practice.simple_board.member.vo.MemberVO">
+    <select id="selectMemberByMemberId" parameterType="MemberVO" resultType="MemberVO">
         select *
         from member
         where member_id = #{memberId}
     </select>
 
-    <update id="memberUpdate" parameterType="com.practice.simple_board.member.vo.MemberVO">
+    <update id="memberUpdate" parameterType="MemberVO">
         update member
-        set password  = #{password},
-            phone     = #{phone},
-            email     = #{email},
-            update_dt = now()
+        set password = #{password},
+        phone = #{phone},
+        email = #{email},
+        update_dt = now()
     </update>
 
-    <update id="memberDelete" parameterType="com.practice.simple_board.member.vo.MemberVO">
+    <update id="memberDelete" parameterType="MemberVO">
         update member
-        set deleted   = true,
-            update_dt = now()
+        set deleted = true,
+        update_dt = now()
     </update>
 
 </mapper>
