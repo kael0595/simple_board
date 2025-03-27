@@ -2,6 +2,7 @@ package com.practice.simple_board.board.controller;
 
 import com.practice.simple_board.board.service.BoardService;
 import com.practice.simple_board.board.vo.BoardVO;
+import com.practice.simple_board.member.service.MemberService;
 import com.practice.simple_board.member.vo.MemberVO;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -21,6 +23,8 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+
+    private final MemberService memberService;
 
     @GetMapping("/create")
     public String createForm() {
@@ -70,9 +74,9 @@ public class BoardController {
     @GetMapping("/update/{id}")
     public String updateForm(@PathVariable("id") Long id,
                              Model model,
-                             HttpSession session) {
+                             Principal principal) {
 
-        MemberVO member = (MemberVO) session.getAttribute("member");
+        MemberVO member = memberService.selectMemberByMemberId(principal.getName());
 
         BoardVO board = boardService.selectOneById(id);
 
@@ -89,9 +93,9 @@ public class BoardController {
     public String update(@PathVariable("id") Long id,
                          @Valid @ModelAttribute BoardVO boardVO,
                          BindingResult bindingResult,
-                         HttpSession session) {
+                         Principal principal) {
 
-        MemberVO member = (MemberVO) session.getAttribute("member");
+        MemberVO member = memberService.selectMemberByMemberId(principal.getName());
 
         BoardVO board = boardService.selectOneById(id);
 
@@ -111,13 +115,13 @@ public class BoardController {
 
     @GetMapping("/delete/{id}")
     public String boardDelete(@PathVariable("id") Long id,
-                              HttpSession session) {
+                              Principal principal) {
 
-        MemberVO memberVO = (MemberVO) session.getAttribute("member");
+        MemberVO member = memberService.selectMemberByMemberId(principal.getName());
 
         BoardVO boardVO = boardService.selectOneById(id);
 
-        if (!boardVO.getAuthor().equals(memberVO.getMemberId())) {
+        if (!boardVO.getAuthor().equals(member.getMemberId())) {
             return "redirect:/board/detail/" + id;
         }
 
