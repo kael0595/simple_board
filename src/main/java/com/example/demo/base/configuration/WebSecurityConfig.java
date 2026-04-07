@@ -21,7 +21,7 @@ public class WebSecurityConfig {
                 .cors(cors -> cors.disable())
                 .csrf(csrf -> csrf.disable())
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/members/login")
+                        .loginPage("/auth/login")
                         .defaultSuccessUrl("/")
                         .usernameParameter("email")
                 )
