@@ -21,6 +21,7 @@ public class WebSecurityConfig {
                 .formLogin(formLogin -> formLogin
                         .loginPage("/members/login")
                         .defaultSuccessUrl("/")
+                        .usernameParameter("email")
                 )
                 .logout(logout -> logout
                         .logoutUrl("/members/logout")
