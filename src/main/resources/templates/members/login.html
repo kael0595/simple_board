@@ -8,7 +8,7 @@
 <body>
 <div class="login-container">
   <h2>로그인</h2>
-  <form class="logib-form" th:action="@{/members/login}" method="post" th:object="${memberDto}">
+  <form class="logib-form" th:action="@{/auth/login}" method="post" th:object="${memberDto}">
     <div class="input-group">
       <input type="text" placeholder="아이디" th:field="*{email}" required>
     </div>
