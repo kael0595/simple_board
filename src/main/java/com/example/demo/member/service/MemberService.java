@@ -1,6 +1,7 @@
 package com.example.demo.member.service;
 
 import com.example.demo.member.dto.MemberDto;
+import com.example.demo.member.dto.Role;
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,11 @@ public class MemberService {
         Member member = new Member();
         member.setEmail(memberDto.getEmail());
         member.setPassword(passwordEncoder.encode(memberDto.getPassword()));
+        if (member.getEmail().startsWith("admin")) {
+            member.setRole(Role.ADMIN);
+        } else {
+            member.setRole(Role.USER);
+        }
         member.setCreatedAt(LocalDateTime.now());
         memberRepository.save(member);
     }
