@@ -28,6 +28,7 @@ public class MemberService {
         } else {
             member.setRole(Role.USER);
         }
+        member.setVerified(true);
         member.setCreatedAt(LocalDateTime.now());
         memberRepository.save(member);
     }
