@@ -8,3 +8,16 @@ spring:
     database: postgresql
     hibernate:
       ddl-auto: update
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: ants7021@naver.com
+    password: TJ7LLYR9S2YE
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: false
