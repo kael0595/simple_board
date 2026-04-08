@@ -11,8 +11,10 @@
     <h2>회원가입</h2>
     <form class="signup-form" th:action="@{/members/signup}" method="post" th:object="${memberDto}">
         <div class="input-group">
-            <input type="text" placeholder="아이디" th:field="*{email}" required>
-            <button class="email-auth" type="button" onclick="mailAuth();">이메일 인증</button>
+            <input type="text" placeholder="아이디" name="email" id="email" th:field="*{email}" required>
+            <input type="text" placeholder="인증번호를 입력하세요." oninput="verifyEmail();" name="code" id="code">
+            <button class="email-auth" type="button" onclick="sendEmail();">인증번호 발송</button>
+            <span id="result" style="color: green;"></span>
         </div>
         <div class="input-group">
             <input type="password" placeholder="비밀번호" th:field="*{password}" required>
@@ -32,4 +34,49 @@
     </form>
 </div>
 </body>
+    <script>
+        function sendEmail() {
+            const email = document.getElementById('email').value;
+
+            console.log(email);
+
+            if (!email) {
+                alert("이메일을 입력하세요");
+                return;
+            }
+
+            fetch(`/auth/email/send?email=${encodeURIComponent(email)}`, {
+                method: "POST",
+            })
+            .then(() => alert("인증번호 발송 완료"))
+            .catch(() => alert("오류 발생"));
+            }
+
+            let timer = null;
+
+            function verifyEmail() {
+                clearTimeout(timer);
+
+                timer = setTimeout(() => {
+                    const email = document.getElementById('email').value;
+                    const code = document.getElementById('code').value;
+
+                if (code.length < 6) return;
+
+                fetch(`/auth/email/verify?email=${encodeURIComponent(email)}&code=${code}`, {
+                    method: "POST"
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error();
+                    return response.text();
+                })
+                .then(() => {
+                    document.getElementById("result").innerText = "인증 성공";
+                })
+                .catch(() => {
+                    document.getElementById("result").innerText = "인증 실패";
+                });
+            }, 500);
+        }
+    </script>
 </html>
