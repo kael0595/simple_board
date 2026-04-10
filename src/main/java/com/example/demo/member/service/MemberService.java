@@ -23,6 +23,7 @@ public class MemberService {
         Member member = new Member();
         member.setEmail(memberDto.getEmail());
         member.setPassword(passwordEncoder.encode(memberDto.getPassword()));
+        member.setNickname(memberDto.getNickname());
         if (member.getEmail().startsWith("admin")) {
             member.setRole(Role.ADMIN);
         } else {
