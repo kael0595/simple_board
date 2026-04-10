@@ -1,12 +1,15 @@
 package com.example.demo.member.contoller;
 
 import com.example.demo.member.dto.MemberDto;
+import com.example.demo.member.entity.Member;
 import com.example.demo.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -33,5 +36,16 @@ public class MemberController {
         memberService.signup(memberDto);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/me/{nickname}")
+    public String member(@PathVariable("nickname") String nickname,
+                         Model model) {
+
+        Member member = memberService.findByNickName(nickname);
+
+        model.addAttribute("member", member);
+
+        return "members/member";
     }
 }

@@ -33,4 +33,8 @@ public class MemberService {
         member.setCreatedAt(LocalDateTime.now());
         memberRepository.save(member);
     }
+
+    public Member findByNickName(String nickname) {
+        return memberRepository.findByNickname(nickname);
+    }
 }
