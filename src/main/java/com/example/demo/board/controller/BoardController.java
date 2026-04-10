@@ -1,11 +1,10 @@
 package com.example.demo.board.controller;
 
-import ch.qos.logback.core.model.Model;
 import com.example.demo.board.dto.BoardDto;
-import com.example.demo.board.entity.Board;
 import com.example.demo.board.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/board")
+@RequestMapping("/boards")
 public class BoardController {
 
     private final BoardService boardService;
@@ -39,11 +38,21 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    @GetMapping("/list")
-    public String boardList(Model model) {
+    @GetMapping
+    public ResponseEntity<List<BoardDto>> boardList() {
 
-        List<Board> boardList = boardService.findAll();
+        List<BoardDto> boardDtoList = boardService.findAll()
+                .stream()
+                .map(board -> {
+                    BoardDto dto = new BoardDto();
+                    dto.setBoardType(board.getBoardType());
+                    dto.setName(board.getName());
+                    dto.setDescription(board.getDescription());
+                    dto.setActive(board.isActive());
+                    return dto;
+                })
+                .toList();
 
-        return "board/list";
+        return ResponseEntity.ok(boardDtoList);
     }
 }
