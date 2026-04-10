@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 생성</title>
+</head>
+<body>
+<form th:action="@{/board/create}" method="post" th:object="${boardDto}">
+  <label for="name">게시판 이름</label>
+  <input type="text" id="name" name="name" th:field="*{name}">
+  <label for="description">게시판 설명</label>
+  <input type="text" id="description" name="description" th:field="*{description}">
+  <label for="boardType">게시판 종류</label>
+  <select id="boardType" name="boardType" th:field="*{boardType}">
+      <option value="QNA">QNA</option>
+      <option value="FREE_BOARD">자유 게시판</option>
+      <option value="NOTICE">공지사항</option>
+  </select>
+  <button>게시판 생성</button>
+</form>
+</body>
+</html>
