@@ -3,7 +3,6 @@ package com.example.demo.board.service;
 import com.example.demo.board.dto.BoardDto;
 import com.example.demo.board.entity.Board;
 import com.example.demo.board.repository.BoardRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +19,7 @@ public class BoardService {
         Board board = new Board();
         board.setName(boardDto.getName());
         board.setDescription(boardDto.getDescription());
+        board.setBoardType(boardDto.getBoardType());
         board.setCreatedAt(LocalDateTime.now());
         boardRepository.save(board);
     }
