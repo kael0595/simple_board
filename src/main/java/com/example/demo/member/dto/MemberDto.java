@@ -17,6 +17,9 @@ public class MemberDto {
     @NotBlank
     private String passwordCnf;
 
+    @NotBlank
+    private String nickname;
+
     private String name;
 
     private String phone;
