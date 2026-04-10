@@ -26,7 +26,7 @@ public class WebSecurityConfig {
                         .usernameParameter("email")
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/members/logout")
+                        .logoutUrl("/auth/logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .logoutSuccessUrl("/members/login")
