@@ -29,7 +29,7 @@ public class WebSecurityConfig {
                         .logoutUrl("/auth/logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                        .logoutSuccessUrl("/members/login")
+                        .logoutSuccessUrl("/auth/login")
                 )
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll());
