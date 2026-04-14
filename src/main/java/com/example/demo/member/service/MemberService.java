@@ -34,11 +34,29 @@ public class MemberService {
         } else {
             member.setRole(Role.USER);
         }
-        member.setCreatedAt(LocalDateTime.now());
         memberRepository.save(member);
     }
 
     public Member findByNickName(String nickname) {
         return memberRepository.findByNickname(nickname);
     }
+
+    public void memberUpdate(Member member, MemberDto memberDto) {
+
+        if (memberDto.getNickname() != null && !memberDto.getNickname().equals("") && !memberDto.getNickname().equals(member.getNickname())) {
+            member.setNickname(memberDto.getNickname());
+        }
+
+        if (memberDto.getName() != null && !memberDto.getName().equals("") && !memberDto.getName().equals(member.getName())) {
+            member.setName(memberDto.getName());
+        }
+
+        if (memberDto.getPhone() != null && !memberDto.getPhone().equals("") && !memberDto.getPhone().equals(member.getPhone())) {
+            member.setPhone(memberDto.getPhone());
+        }
+
+        memberRepository.save(member);
+
+    }
+
 }
