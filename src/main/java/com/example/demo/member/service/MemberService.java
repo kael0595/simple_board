@@ -4,6 +4,7 @@ import com.example.demo.member.dto.MemberDto;
 import com.example.demo.member.dto.Role;
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.repository.MemberRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,16 +21,19 @@ public class MemberService {
 
     public void signup(MemberDto memberDto) {
 
+        if (!memberDto.getPassword().equals(memberDto.getPasswordCnf())) {
+            throw new RuntimeException("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+        }
+
         Member member = new Member();
         member.setEmail(memberDto.getEmail());
         member.setPassword(passwordEncoder.encode(memberDto.getPassword()));
         member.setNickname(memberDto.getNickname());
-        if (member.getEmail().startsWith("admin")) {
+        if (member.getNickname().equals("admin")) {
             member.setRole(Role.ADMIN);
         } else {
             member.setRole(Role.USER);
         }
-        member.setVerified(true);
         member.setCreatedAt(LocalDateTime.now());
         memberRepository.save(member);
     }
