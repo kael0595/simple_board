@@ -67,4 +67,32 @@ public class MemberController {
 
         return "members/member";
     }
+
+    @GetMapping("/me/{nickname}/update")
+    public String memberUpdate(@PathVariable("nickname") String nickname,
+                                Model model) {
+
+        Member member = memberService.findByNickName(nickname);
+
+        model.addAttribute("member", member);
+
+        return "members/update";
+    }
+
+    @PostMapping("/me/{nickname}/update")
+    public String memberUpdate(@PathVariable("nickname") String nickname,
+                               @Valid MemberDto memberDto,
+                               BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "members/update";
+        }
+
+        Member member = memberService.findByNickName(nickname);
+
+        memberService.memberUpdate(member, memberDto);
+
+        return "redirect:/members/me/" + nickname;
+
+    }
 }
