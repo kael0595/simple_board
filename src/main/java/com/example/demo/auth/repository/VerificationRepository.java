@@ -1,25 +1,11 @@
 package com.example.demo.auth.repository;
 
-import org.springframework.stereotype.Repository;
+import com.example.demo.auth.entity.EmailVerification;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Optional;
 
-@Repository
-public class VerificationRepository {
+public interface VerificationRepository extends JpaRepository<EmailVerification, Long> {
+    Optional<EmailVerification> findByEmail(String email);
 
-    private final Map<String, String> store = new ConcurrentHashMap<>();
-
-    public String findByEmail(String email) {
-        return store.get(email);
-    }
-
-    public void save(String email, String code) {
-        store.put(email, code);
-    }
-
-    public void remove(String email) {
-        store.remove(email);
-    }
 }
