@@ -1,5 +1,7 @@
 package com.example.demo.member.contoller;
 
+import com.example.demo.auth.entity.EmailVerification;
+import com.example.demo.auth.repository.VerificationRepository;
 import com.example.demo.member.dto.MemberDto;
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.service.MemberService;
@@ -13,12 +15,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
 
     private final MemberService memberService;
+
+    private final VerificationRepository verificationRepository;
 
     @GetMapping("/signup")
     public String signup(MemberDto memberDto) {
@@ -33,7 +39,20 @@ public class MemberController {
             return "members/signup";
         }
 
+        EmailVerification emailVerification = verificationRepository.findByEmail(memberDto.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("이메일 인증이 필요합니다."));
+
+        if (!emailVerification.isVerified()) {
+            throw new IllegalArgumentException("이메일 인증이 필요합니다.");
+        }
+
+        if (emailVerification.getExpireTime().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("인증시간이 만료되었습니다.");
+        }
+
         memberService.signup(memberDto);
+
+        verificationRepository.delete(emailVerification);
 
         return "redirect:/";
     }
