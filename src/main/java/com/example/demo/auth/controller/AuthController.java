@@ -31,7 +31,7 @@ public class AuthController {
     public ResponseEntity<?> verifyEmail(@RequestParam String email,
                                          @RequestParam String code) {
 
-        authService.verifyCode(email, code);
+        authService.verify(email, code);
 
         return ResponseEntity.ok("인증 성공");
     }

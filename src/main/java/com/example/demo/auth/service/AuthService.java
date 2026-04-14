@@ -3,6 +3,7 @@ package com.example.demo.auth.service;
 import com.example.demo.auth.entity.EmailVerification;
 import com.example.demo.auth.repository.VerificationRepository;
 import com.example.demo.email.service.EmailService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AuthService {
 
     private final EmailService emailService;
