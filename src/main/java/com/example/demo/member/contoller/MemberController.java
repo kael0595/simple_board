@@ -70,7 +70,8 @@ public class MemberController {
 
     @GetMapping("/me/{nickname}/update")
     public String memberUpdate(@PathVariable("nickname") String nickname,
-                                Model model) {
+                                Model model,
+                               MemberDto memberDto) {
 
         Member member = memberService.findByNickName(nickname);
 
