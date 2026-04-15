@@ -7,30 +7,30 @@
 <body>
 <div class="update-container">
     <h2>회원 정보 수정</h2>
-    <form class="update-form" th:action="@{/members/me/{nickname}/update}" method="post" th:object="${memberDto}">
+성    <form class="update-form" th:action="@{/members/me/{nickname}/update(nickname=${member.nickname})}" method="post" th:object="${memberUpdateDto}">
         <div class="input-group">
             <label for="email">이메일</label>
             <span th:text="${member.email}" id="email"></span>
         </div>
         <div class="input-group">
             <label for="password">비밀번호</label>
-            <input type="password" id="password" placeholder="비밀번호">
+            <input type="password" id="password" name="password" placeholder="비밀번호" th:field="*{password}">
         </div>
         <div class="input-group">
             <label for="passwordCnf">비밀번호 확인</label>
-            <input type="password" id="passwordCnf" placeholder="비밀번호 확인">
+            <input type="password" id="passwordCnf" name="passwordCnf" placeholder="비밀번호 확인" th:field="*{passwordCnf}">
         </div>
         <div class="input-group">
             <label for="nickname">닉네임</label>
-            <input type="text" placeholder="닉네임" id="nickname" th:field="*{nickname}">
+            <input type="text" placeholder="닉네임" id="nickname" name="nickname" th:field="*{nickname}">
         </div>
         <div class="input-group">
             <label for="name">이름</label>
-            <input type="text" placeholder="이름" id="name" th:field="*{name}">
+            <input type="text" placeholder="이름" id="name" name="name" th:field="*{name}">
         </div>
         <div class="input-group">
             <label for="phone">전화번호</label>
-            <input type="text" placeholder="전화번호" id="phone" th:field="*{phone}">
+            <input type="text" placeholder="전화번호" id="phone" name="phone" th:field="*{phone}">
         </div>
         <button class="update-btn">수정</button>
     </form>
