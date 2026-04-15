@@ -97,4 +97,20 @@ public class MemberController {
         return "redirect:/members/me/" + nickname;
 
     }
+
+    @PostMapping("/me/{nickname}/password")
+    public String updatePassword(@PathVariable("nickname") String nickname,
+                                 @Valid MemberUpdateDto memberUpdateDto,
+                                 BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "members/update";
+        }
+
+        Member member = memberService.findByNickName(nickname);
+
+        memberService.updatePassword(member, memberUpdateDto);
+
+        return "redirct:/";
+    }
 }

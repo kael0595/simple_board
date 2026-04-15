@@ -5,6 +5,7 @@ import com.example.demo.member.dto.MemberUpdateDto;
 import com.example.demo.member.dto.Role;
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.repository.MemberRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -57,4 +58,18 @@ public class MemberService {
 
     }
 
+    public void updatePassword(Member member, MemberUpdateDto dto) {
+
+        if (!passwordEncoder.matches(dto.getCurrentPassword(), member.getPassword())) {
+            throw new RuntimeException("현재 비밀번호가 일치하지 않습니다.");
+        }
+
+        if (!dto.getNewPassword().equals(dto.getNewPasswordCnf())) {
+            throw new RuntimeException("새 비밀번호가 일치하지 않습니다.");
+        }
+
+        member.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+
+        memberRepository.save(member);
+    }
 }
