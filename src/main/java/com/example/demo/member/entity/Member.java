@@ -45,6 +45,6 @@ public class Member {
 
     private String phone;
 
-    private boolean deleted;
+    private boolean deleted = false;
 
 }
