@@ -3,6 +3,7 @@ package com.example.demo.member.contoller;
 import com.example.demo.auth.entity.EmailVerification;
 import com.example.demo.auth.repository.VerificationRepository;
 import com.example.demo.member.dto.MemberDto;
+import com.example.demo.member.dto.MemberUpdateDto;
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.service.MemberService;
 import jakarta.validation.Valid;
@@ -70,8 +71,8 @@ public class MemberController {
 
     @GetMapping("/me/{nickname}/update")
     public String memberUpdate(@PathVariable("nickname") String nickname,
-                                Model model,
-                               MemberDto memberDto) {
+                               Model model,
+                               MemberUpdateDto memberUpdateDtoDto) {
 
         Member member = memberService.findByNickName(nickname);
 
@@ -82,7 +83,7 @@ public class MemberController {
 
     @PostMapping("/me/{nickname}/update")
     public String memberUpdate(@PathVariable("nickname") String nickname,
-                               @Valid MemberDto memberDto,
+                               @Valid MemberUpdateDto memberUpdateDto,
                                BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -91,7 +92,7 @@ public class MemberController {
 
         Member member = memberService.findByNickName(nickname);
 
-        memberService.memberUpdate(member, memberDto);
+        memberService.memberUpdate(member, memberUpdateDto);
 
         return "redirect:/members/me/" + nickname;
 

@@ -1,15 +1,13 @@
 package com.example.demo.member.service;
 
 import com.example.demo.member.dto.MemberDto;
+import com.example.demo.member.dto.MemberUpdateDto;
 import com.example.demo.member.dto.Role;
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.repository.MemberRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -41,18 +39,18 @@ public class MemberService {
         return memberRepository.findByNickname(nickname);
     }
 
-    public void memberUpdate(Member member, MemberDto memberDto) {
+    public void memberUpdate(Member member, MemberUpdateDto memberUpdateDto) {
 
-        if (memberDto.getNickname() != null && !memberDto.getNickname().equals("") && !memberDto.getNickname().equals(member.getNickname())) {
-            member.setNickname(memberDto.getNickname());
+        if (memberUpdateDto.getNickname() != null && !memberUpdateDto.getNickname().equals("") && !memberUpdateDto.getNickname().equals(member.getNickname())) {
+            member.setNickname(memberUpdateDto.getNickname());
         }
 
-        if (memberDto.getName() != null && !memberDto.getName().equals("") && !memberDto.getName().equals(member.getName())) {
-            member.setName(memberDto.getName());
+        if (memberUpdateDto.getName() != null && !memberUpdateDto.getName().equals("") && !memberUpdateDto.getName().equals(member.getName())) {
+            member.setName(memberUpdateDto.getName());
         }
 
-        if (memberDto.getPhone() != null && !memberDto.getPhone().equals("") && !memberDto.getPhone().equals(member.getPhone())) {
-            member.setPhone(memberDto.getPhone());
+        if (memberUpdateDto.getPhone() != null && !memberUpdateDto.getPhone().equals("") && !memberUpdateDto.getPhone().equals(member.getPhone())) {
+            member.setPhone(memberUpdateDto.getPhone());
         }
 
         memberRepository.save(member);
