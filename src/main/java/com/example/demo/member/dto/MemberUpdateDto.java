@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class MemberUpdateDto {
 
-    private String email;
+    private String currentPassword;
 
-    private String password;
+    private String newPassword;
 
-    private String passwordCnf;
+    private String newPasswordCnf;
 
     private String nickname;
 
