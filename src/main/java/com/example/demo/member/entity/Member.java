@@ -39,8 +39,6 @@ public class Member {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    private boolean verified;
-
     private String name;
 
     private String phone;
