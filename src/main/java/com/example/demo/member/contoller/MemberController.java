@@ -6,9 +6,13 @@ import com.example.demo.member.dto.MemberDto;
 import com.example.demo.member.dto.MemberUpdateDto;
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.service.MemberService;
+import com.sun.net.httpserver.HttpContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -114,7 +118,9 @@ public class MemberController {
     @PostMapping("/me/password")
     public String updatePassword(@Valid MemberUpdateDto memberUpdateDto,
                                  BindingResult bindingResult,
-                                 Authentication authentication) {
+                                 Authentication authentication,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response) {
 
         if (bindingResult.hasErrors()) {
             return "members/update";
@@ -123,6 +129,8 @@ public class MemberController {
         Member member = memberService.findByEmail(authentication.getName());
 
         memberService.updatePassword(member, memberUpdateDto);
+
+        new SecurityContextLogoutHandler().logout(request, response, authentication);
 
         return "redirct:/";
     }
