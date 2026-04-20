@@ -132,6 +132,6 @@ public class MemberController {
 
         new SecurityContextLogoutHandler().logout(request, response, authentication);
 
-        return "redirct:/";
+        return "redirect:/";
     }
 }
