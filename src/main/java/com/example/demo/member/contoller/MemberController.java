@@ -99,6 +99,18 @@ public class MemberController {
 
     }
 
+    @GetMapping("/me/password")
+    public String updatePassword(Model model,
+                                 MemberUpdateDto memberUpdateDto,
+                                 Authentication authentication) {
+
+        Member member = memberService.findByEmail(authentication.getName());
+
+        model.addAttribute("member", member);
+
+        return "members/password";
+    }
+
     @PostMapping("/me/password")
     public String updatePassword(@Valid MemberUpdateDto memberUpdateDto,
                                  BindingResult bindingResult,
