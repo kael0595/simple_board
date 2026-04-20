@@ -8,6 +8,7 @@ import com.example.demo.member.entity.Member;
 import com.example.demo.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,56 +59,56 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @GetMapping("/me/{nickname}")
-    public String member(@PathVariable("nickname") String nickname,
-                         Model model) {
+    @GetMapping("/me")
+    public String member(Model model,
+                         Authentication authentication) {
 
-        Member member = memberService.findByNickName(nickname);
+        Member member = memberService.findByEmail(authentication.getName());
 
         model.addAttribute("member", member);
 
         return "members/member";
     }
 
-    @GetMapping("/me/{nickname}/update")
-    public String memberUpdate(@PathVariable("nickname") String nickname,
-                               Model model,
-                               MemberUpdateDto memberUpdateDtoDto) {
+    @GetMapping("/me/update")
+    public String memberUpdate(Model model,
+                               MemberUpdateDto memberUpdateDtoDto,
+                               Authentication authentication) {
 
-        Member member = memberService.findByNickName(nickname);
+        Member member = memberService.findByEmail(authentication.getName());
 
         model.addAttribute("member", member);
 
         return "members/update";
     }
 
-    @PostMapping("/me/{nickname}/update")
-    public String memberUpdate(@PathVariable("nickname") String nickname,
-                               @Valid MemberUpdateDto memberUpdateDto,
-                               BindingResult bindingResult) {
+    @PostMapping("/me/update")
+    public String memberUpdate(@Valid MemberUpdateDto memberUpdateDto,
+                               BindingResult bindingResult,
+                               Authentication authentication) {
 
         if (bindingResult.hasErrors()) {
             return "members/update";
         }
 
-        Member member = memberService.findByNickName(nickname);
+        Member member = memberService.findByEmail(authentication.getName());
 
         memberService.memberUpdate(member, memberUpdateDto);
 
-        return "redirect:/members/me/" + nickname;
+        return "redirect:/members/me/" + authentication.getName();
 
     }
 
-    @PostMapping("/me/{nickname}/password")
-    public String updatePassword(@PathVariable("nickname") String nickname,
-                                 @Valid MemberUpdateDto memberUpdateDto,
-                                 BindingResult bindingResult) {
+    @PostMapping("/me/password")
+    public String updatePassword(@Valid MemberUpdateDto memberUpdateDto,
+                                 BindingResult bindingResult,
+                                 Authentication authentication) {
 
         if (bindingResult.hasErrors()) {
             return "members/update";
         }
 
-        Member member = memberService.findByNickName(nickname);
+        Member member = memberService.findByEmail(authentication.getName());
 
         memberService.updatePassword(member, memberUpdateDto);
 
