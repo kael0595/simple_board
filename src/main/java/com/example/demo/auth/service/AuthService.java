@@ -41,17 +41,22 @@ public class AuthService {
         return String.valueOf((int) ((Math.random() * 900000) + 100000));
     }
 
+    @Transactional
     public void verify(String email, String code) {
 
         EmailVerification emailVerification = verificationRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("인증 요청이 없습니다."));
 
-        if (!emailVerification.getCode().equals(code)) {
-            throw new RuntimeException("인증번호가 일치하지 않습니다.");
+        if (emailVerification.isVerified()) {
+            throw new RuntimeException("이미 인증된 이메일입니다.");
         }
 
         if (emailVerification.getExpireTime().isBefore(LocalDateTime.now())) {
             throw new RuntimeException("인증 시간이 만료되었습니다.");
+        }
+
+        if (emailVerification.getCode() == null || !emailVerification.getCode().equals(code)) {
+            throw new RuntimeException("인증번호가 일치하지 않습니다.");
         }
 
         emailVerification.verify();
