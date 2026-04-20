@@ -7,10 +7,31 @@
 <body>
 <h2>마이페이지</h2>
 <table>
-  <tr>
-    <th>아이디</th>
-    <td th:text="${member.email}"></td>
-  </tr>
+    <tr>
+        <th>아이디</th>
+        <td th:text="${member.email}"></td>
+    </tr>
+    <tr>
+        <th>비밀번호</th>
+    </tr>
+    <tr>
+        <th>닉네임</th>
+        <td th:text="${member.nickname}"></td>
+    </tr>
+    <tr>
+        <th>이름</th>
+        <td th:text="${member.name}"></td>
+    </tr>
+    <tr>
+        <th>전화번호</th>
+        <td th:text="${member.phone}"></td>
+    </tr>
 </table>
+<a th:href="@{/members/me/{nickname}/update(nickname=${member.nickname})}">
+    <button>회원 정보 수정</button>
+</a>
+<a th:href="@{/members/me/{nickname}/password(nickname=${member.nickname})}">
+    <button>비밀번호 변경</button>
+</a>
 </body>
 </html>
