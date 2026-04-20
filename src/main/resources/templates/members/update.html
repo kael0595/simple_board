@@ -7,18 +7,11 @@
 <body>
 <div class="update-container">
     <h2>회원 정보 수정</h2>
-성    <form class="update-form" th:action="@{/members/me/{nickname}/update(nickname=${member.nickname})}" method="post" th:object="${memberUpdateDto}">
+정    <form class="update-form" th:action="@{/members/me/update}" method="post"
+          th:object="${memberUpdateDto}">
         <div class="input-group">
             <label for="email">이메일</label>
-            <span th:text="${member.email}" id="email"></span>
-        </div>
-        <div class="input-group">
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" name="password" placeholder="비밀번호" th:field="*{password}">
-        </div>
-        <div class="input-group">
-            <label for="passwordCnf">비밀번호 확인</label>
-            <input type="password" id="passwordCnf" name="passwordCnf" placeholder="비밀번호 확인" th:field="*{passwordCnf}">
+            <input th:value="${member.email}" id="email" readonly>
         </div>
         <div class="input-group">
             <label for="nickname">닉네임</label>
