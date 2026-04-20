@@ -95,7 +95,7 @@ public class MemberController {
 
         memberService.memberUpdate(member, memberUpdateDto);
 
-        return "redirect:/members/me/" + authentication.getName();
+        return "redirect:/members/me";
 
     }
 
