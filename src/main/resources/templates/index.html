@@ -9,6 +9,7 @@
 <a sec:authorize="Anonymous" th:href="@{/auth/login}">로그인</a>
 <a sec:authorize="isAuthenticated()" th:href="@{/auth/logout}">로그아웃</a>
 <a sec:authorize="isAuthenticated()" th:href="@{/boards/create}">게시판생성</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/members/me}">마이페이지</a>
 <a th:href="@{/boards}">게시판 목록</a>
 </body>
 </html>
