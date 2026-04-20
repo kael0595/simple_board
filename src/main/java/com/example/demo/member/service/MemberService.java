@@ -72,4 +72,8 @@ public class MemberService {
 
         memberRepository.save(member);
     }
+
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email).orElseThrow();
+    }
 }
