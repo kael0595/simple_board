@@ -10,7 +10,6 @@ body {
   background-color: #ffffff;
   padding: 40px;
   border-radius: 10px;
-  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
   width: 350px;
   text-align: center;
 }
@@ -22,6 +21,14 @@ h2 {
 
 .input-group {
   margin-bottom: 15px;
+}
+
+.input-verifyCode {
+    margin-top: 10px;
+}
+
+.result {
+    color: green;
 }
 
 input {

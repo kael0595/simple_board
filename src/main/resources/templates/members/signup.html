@@ -11,10 +11,13 @@
     <h2>회원가입</h2>
     <form class="signup-form" th:action="@{/members/signup}" method="post" th:object="${memberDto}">
         <div class="input-group">
-            <input type="text" placeholder="아이디" name="email" id="email" th:field="*{email}" required>
-            <input type="text" placeholder="인증번호를 입력하세요." oninput="verifyEmail();" name="code" id="code">
+성            <input type="text" placeholder="아이디" name="email" id="email" onblur="checkEmailExists()"
+                   th:field="*{email}"
+                   required>
+            <input type="text" class="input-verifyCode" placeholder="인증번호를 입력하세요." oninput="verifyEmail();" name="code"
+                   id="code">
             <button class="email-auth" type="button" onclick="sendEmail();">인증번호 발송</button>
-            <span id="result" style="color: green;"></span>
+            <span id="result" class="result"></span>
         </div>
         <div class="input-group">
             <input type="password" placeholder="비밀번호" th:field="*{password}" required>
@@ -31,43 +34,51 @@
         <div class="input-group">
             <input type="text" placeholder="전화번호" th:field="*{phone}">
         </div>
+        <input type="hidden" id="emailVerified" name="emailVerified" value="false">
         <button class="signup-btn" type="submit">회원가입</button>
         <p class="login-link">이미 계정이 있으신가요? <a th:href="@{/auth/login}">로그인</a></p>
     </form>
 </div>
 </body>
-    <script>
-        function sendEmail() {
-            const email = document.getElementById('email').value;
+<script>
+    function sendEmail() {
+        const email = document.getElementById('email').value;
 
-            console.log(email);
+        fetch(`/auth/email/check?email=${encodeURIComponent(email)}`)
+            .then(res => res.json())
+            .then(exists => {
 
-            if (!email) {
-                alert("이메일을 입력하세요");
-                return;
-            }
+                if (email == null || email === "") {
+                    alert("이메일을 입력해주세요.");
+                    return;
+                }
 
-            fetch(`/auth/email/send?email=${encodeURIComponent(email)}`, {
-                method: "POST",
-            })
-            .then(() => alert("인증번호 발송 완료"))
-            .catch(() => alert("오류 발생"));
-            }
+                if (exists) {
+                    alert("이미 가입된 이메일입니다");
+                    return;
+                }
 
-            let timer = null;
-
-            function verifyEmail() {
-                clearTimeout(timer);
-
-                timer = setTimeout(() => {
-                    const email = document.getElementById('email').value;
-                    const code = document.getElementById('code').value;
-
-                if (code.length < 6) return;
-
-                fetch(`/auth/email/verify?email=${encodeURIComponent(email)}&code=${code}`, {
+                fetch(`/auth/email/send?email=${encodeURIComponent(email)}`, {
                     method: "POST"
                 })
+                    .then(() => alert("인증번호 발송 완료"));
+            });
+    }
+
+    let timer = null;
+
+    function verifyEmail() {
+        clearTimeout(timer);
+
+        timer = setTimeout(() => {
+            const email = document.getElementById('email').value;
+            const code = document.getElementById('code').value;
+
+            if (code.length < 6) return;
+
+            fetch(`/auth/email/verify?email=${encodeURIComponent(email)}&code=${code}`, {
+                method: "POST"
+            })
                 .then(response => {
                     if (!response.ok) throw new Error();
                     return response.text();
@@ -78,7 +89,28 @@
                 .catch(() => {
                     document.getElementById("result").innerText = "인증 실패";
                 });
-            }, 500);
-        }
-    </script>
+        }, 500);
+    }
+
+    function checkEmailExists() {
+
+        const email = document.getElementById('email').value;
+
+        if (!email) return;
+
+        fetch(`/auth/email/check?email=${encodeURIComponent(email)}`)
+            .then(res => res.json())
+            .then(exists => {
+
+                const result = document.getElementById('result');
+
+                if (exists) {
+                    result.innerText = "이미 가입된 이메일입니다."
+                    result.style.color = "red";
+                } else {
+                    result.innerText = "사용 가능한 이메일입니다.";
+                }
+            });
+    }
+</script>
 </html>
