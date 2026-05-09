@@ -2,6 +2,7 @@ package com.example.demo.auth.controller;
 
 import com.example.demo.auth.service.AuthService;
 import com.example.demo.member.dto.MemberDto;
+import com.example.demo.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+
+    private final MemberService memberService;
 
     @GetMapping("/login")
     public String login(MemberDto memberDto) {
@@ -34,5 +37,14 @@ public class AuthController {
         authService.verify(email, code);
 
         return ResponseEntity.ok("인증 성공");
+    }
+
+    @GetMapping("/email/check")
+    public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
+
+        boolean exist = memberService.existByEmail(email);
+
+        return ResponseEntity.ok(exist);
+
     }
 }
