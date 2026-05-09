@@ -11,7 +11,7 @@
     <h2>회원가입</h2>
     <form class="signup-form" th:action="@{/members/signup}" method="post" th:object="${memberDto}">
         <div class="input-group">
-성            <input type="text" placeholder="아이디" name="email" id="email" onblur="checkEmailExists()"
+            <input type="text" placeholder="아이디" name="email" id="email" onblur="checkEmailExists()"
                    th:field="*{email}"
                    required>
             <input type="text" class="input-verifyCode" placeholder="인증번호를 입력하세요." oninput="verifyEmail();" name="code"
@@ -109,6 +109,7 @@
                     result.style.color = "red";
                 } else {
                     result.innerText = "사용 가능한 이메일입니다.";
+                    result.style.color = "green";
                 }
             });
     }
